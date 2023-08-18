@@ -25,7 +25,7 @@ public class PriceSearchController {
     @Autowired
     PriceSearchService priceSearchService;
 
-    @GetMapping("/getprice")
+    @GetMapping("/getPrice")
     public ResponseEntity getPrice(@RequestParam String date, @RequestParam String hour) {
         if (date.isBlank() || hour.isBlank()) return new ResponseEntity("Date or hour cannot be null", HttpStatusCode.valueOf(HttpStatus.SC_BAD_REQUEST));
         return priceSearchService.getPrice(date,hour);

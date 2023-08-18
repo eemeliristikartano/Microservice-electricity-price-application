@@ -1,6 +1,7 @@
-package com.demo.pricesearchservice.service;
+package com.demo.pricetodayandtomorrowservice.service;
 
-import com.demo.pricesearchservice.dto.PriceDTO;
+import com.demo.pricetodayandtomorrowservice.dto.PriceDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.hc.core5.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,39 +15,41 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class PriceSearchService {
+public class PriceTodayAndTomorrowService {
 
-    @Value("${PRICE_SEARCH_API}")
+    @Value("${PRICE_TODAY_AND_TOMORROW_API}")
     String API;
+
+    final String ENDPOINT = "TodayAndDayForward";
 
     HttpURLConnection connection = null;
     BufferedReader reader = null;
     InputStream inputStream = null;
 
-    public ResponseEntity getPrice(String date, String hour) {
+    public ResponseEntity priceTodayAndTomorrow() {
         try {
-            connection = getConnection(date, hour);
+            connection = getConnection();
             reader = getBufferedReader(connection);
-            PriceDTO priceDTO = mapObject(reader);
+            //PricesDTO pricesDTO = mapObject(reader);
+            JsonNode jsonNode = new ObjectMapper().readTree(reader);
+            List<PriceDTO> prices = mapPrices(jsonNode);
 
-            // Price from API is displayed in snt / kWh. I want it to be € / kWh
-            dividePriceBy100(priceDTO);
-
-            roundPrice(priceDTO);
-
-            return ResponseEntity.ok(priceDTO);
+            return ResponseEntity.ok(prices);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatusCode.valueOf(HttpStatus.SC_BAD_REQUEST));
         } finally {
             closeConnections(connection, reader, inputStream);
         }
+
     }
 
-    private HttpURLConnection getConnection(String date, String hour) throws IOException {
-        URL url = new URL(API + "?date=" + date + "&hour=" + hour);
+    private HttpURLConnection getConnection() throws IOException {
+        URL url = new URL(API + ENDPOINT);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         return connection;
@@ -57,21 +60,18 @@ public class PriceSearchService {
         return new BufferedReader(new InputStreamReader(inputStream));
     }
 
-    private PriceDTO mapObject(BufferedReader reader) throws IOException {
+    private List<PriceDTO> mapPrices(JsonNode jsonNode) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(reader, PriceDTO.class);
-    }
+        List<PriceDTO> prices = new ArrayList<>();
 
-    private void dividePriceBy100(PriceDTO priceDTO) {
-        double currentPrice = priceDTO.getPrice();
-        double dividedPrice = currentPrice / 100;
-        priceDTO.setPrice(dividedPrice);
-    }
+        if (jsonNode.isArray()) {
+            for (JsonNode priceNode : jsonNode) {
+                PriceDTO price = objectMapper.convertValue(priceNode, PriceDTO.class);
+                prices.add(price);
+            }
+        }
 
-    private void roundPrice(PriceDTO priceDTO) {
-        double currentPrice = priceDTO.getPrice();
-        double roundedPrice = Math.round(currentPrice * 10_000.0) / 10_000.0;
-        priceDTO.setPrice(roundedPrice);
+        return prices;
     }
 
     private void closeConnections(HttpURLConnection connection, BufferedReader reader, InputStream inputStream) {
@@ -83,4 +83,5 @@ public class PriceSearchService {
             e.printStackTrace();
         }
     }
+
 }

@@ -1,18 +1,21 @@
 package com.demo.pricetodayandtomorrowservice.controller;
 
+import com.demo.pricetodayandtomorrowservice.service.PriceTodayAndTomorrowService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PriceTodayAndTomorrowController {
 
-    @Value("${PRICE_TODAY_AND_TOMORROW_API}")
-    String API;
+    @Autowired
+    PriceTodayAndTomorrowService priceTodayAndTomorrowService;
 
-    @GetMapping("/test")
-    public void test() {
-        System.out.println(API);
+    @GetMapping("/TodayAndDayForward")
+    public ResponseEntity getTodayAndDayForwardPrices() {
+        return priceTodayAndTomorrowService.priceTodayAndTomorrow();
     }
 
 }
