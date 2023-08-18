@@ -31,9 +31,11 @@ public class PriceSearchService {
             reader = getBufferedReader(connection);
             PriceDTO priceDTO = mapObject(reader);
 
-            // Price from API is displayed in snt / kWh. I want it to be € / kWh
+            // Dividing the price to match the format of the second API.
+            // From cent / kWh -> euro / kWh
             dividePriceBy100(priceDTO);
 
+            // Rounding the price to match the format of the second API.
             roundPrice(priceDTO);
 
             return ResponseEntity.ok(priceDTO);
