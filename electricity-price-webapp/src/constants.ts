@@ -1,0 +1,1 @@
+export const PRICE_SEARCH_API = "http://localhost:8080/getPrice";

@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import priceSearcReducer from '../features/priceSearchSlice';
 
 export const store = configureStore({
   reducer: {
-
+    priceSearch: priceSearcReducer
   },
 });
 
