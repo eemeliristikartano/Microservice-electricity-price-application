@@ -7,7 +7,7 @@ const PriceSearch = () => {
             <div >
                 <PriceSearchFormBox />
             </div>
-            <div >
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <SearchedPrices />
             </div>
         </div>

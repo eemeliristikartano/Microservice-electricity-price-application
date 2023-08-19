@@ -1,17 +1,35 @@
-import { addPrice, selectPrice } from '../../features/priceSearchSlice'
+import { addPrice, selectAllPrices } from '../../features/priceSearchSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const SearchedPrices = () => {
-    const prices = useAppSelector(selectPrice);
-    const status = useAppSelector(state => state.priceSearch.prices);
+    const prices = useAppSelector(selectAllPrices);
 
-    console.log(prices)
+    const tableRows = prices.length > 0 && prices.map((price, index) =>
+        <tr>
+            <td>{index + 1}</td>
+            <td>{price.price}</td>
+            <td>{price.date}</td>
+            <td>{price.hour}</td>
+        </tr>);
 
     return (
-        <div>
-            Jee
-            { }
-        </div>
+        prices.length > 0 ?
+            <>
+                <h1>{prices.at(-1)!.price} € / kWh</h1>
+                <div className="table-div">
+                    <table>
+                        <tr>
+                            <th>#</th>
+                            <th>€ / kWh</th>
+                            <th>Date</th>
+                            <th>Hour</th>
+                        </tr>
+                        {tableRows}
+                    </table>
+                </div>
+            </>
+            :
+            <div></div>
     )
 
 

@@ -14,7 +14,7 @@ const PriceSearchForm = () => {
 
     const handlePriceSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(fetchPrice(timeDate.date, timeDate.hour))
+        dispatch(fetchPrice(timeDate));
 
         try {
 
