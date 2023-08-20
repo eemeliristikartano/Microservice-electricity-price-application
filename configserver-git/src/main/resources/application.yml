@@ -7,6 +7,5 @@ spring:
         git:
           uri: https://github.com/eemeliristikartano/Microservice-electricity-price-application
           search-paths: spring-config-electricity-price/price*
-          username: ${username}
-          password: ${password}
+          
 
