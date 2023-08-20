@@ -67,6 +67,7 @@ public class PriceTodayAndTomorrowService {
         if (jsonNode.isArray()) {
             for (JsonNode priceNode : jsonNode) {
                 PriceDTO price = objectMapper.convertValue(priceNode, PriceDTO.class);
+                price.setHour(price.getDateTime().substring(11,13 ));
                 prices.add(price);
             }
         }

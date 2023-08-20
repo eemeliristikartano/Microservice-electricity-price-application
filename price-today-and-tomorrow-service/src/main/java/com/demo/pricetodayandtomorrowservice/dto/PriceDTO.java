@@ -16,6 +16,8 @@ public class PriceDTO {
     @JsonProperty("PriceWithTax")
     private double priceWithTax;
 
+    private String hour;
+
     public int getRank() {
         return rank;
     }
@@ -46,6 +48,14 @@ public class PriceDTO {
 
     public void setPriceWithTax(double priceWithTax) {
         this.priceWithTax = priceWithTax;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
     @Override

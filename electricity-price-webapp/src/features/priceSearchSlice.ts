@@ -1,15 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
+import { Price, PriceSearchState } from "./types";
 
-interface PriceSearchState {
-    prices: Price[]
-}
 
-interface Price {
-    price: number
-    date: string
-    hour: number
-}
 
 const initialState: PriceSearchState = {
     prices: []

@@ -2,11 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { addPrice } from '../../features/priceSearchSlice';
 import { PRICE_SEARCH_API } from '../../constants';
-
-interface DateTime {
-    date: string
-    hour: number
-}
+import { DateTime } from './dateTime';
 
 export const fetchPrice = createAsyncThunk(
     'priceSearch/fetchPrice',

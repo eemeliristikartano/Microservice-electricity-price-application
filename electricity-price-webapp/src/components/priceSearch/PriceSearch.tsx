@@ -1,4 +1,4 @@
-import SearchedPrices from "../SearchedPrices/SearchedPrices";
+import SearchedPrices from "./SearchedPricesTable";
 import PriceSearchFormBox from "./PriceSearchFormBox";
 
 const PriceSearch = () => {

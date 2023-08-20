@@ -1,5 +1,5 @@
-import { addPrice, selectAllPrices } from '../../features/priceSearchSlice'
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectAllPrices } from '../../features/priceSearchSlice'
+import { useAppSelector } from '../../app/hooks';
 
 const SearchedPrices = () => {
     const prices = useAppSelector(selectAllPrices);
