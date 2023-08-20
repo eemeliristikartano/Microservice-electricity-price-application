@@ -44,6 +44,13 @@ This repository contains multiple projects related to a larger application. Each
     
 5. **Spring-config-electricity-price**
    - Description: This folder contains configuration files intended for use with the config-server. These configurations are related to the electricity price application and are designed to be managed centrally for ease of maintenance and deployment.
+  
+## Diagram
+
+I guess the diagram for this project would be something like this.
+
+![image](https://github.com/eemeliristikartano/Microservice-electricity-price-application/assets/92360393/0873b68d-0e93-48cc-848d-431658156b36)
+
 
 ## About the Project
 
