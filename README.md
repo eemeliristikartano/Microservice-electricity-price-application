@@ -41,6 +41,9 @@ This repository contains multiple projects related to a larger application. Each
      - Recharts
      - TypeScript
      - Web Vitals
+    
+5. **Spring-config-electricity-price**
+   - Description: This folder contains configuration files intended for use with the config-server. These configurations are related to the electricity price application and are designed to be managed centrally for ease of maintenance and deployment.
 
 ## About the Project
 
